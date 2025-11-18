@@ -9,7 +9,7 @@
 <strong>Explanation:</strong> Each of the 1s are at least 2 places away from each other.
 </pre>
 
-<p><strong class="example">Example 2:</strong></p>
+<p><strong class="example">Example NO.2</strong></p>
 <img alt="" src="https://assets.leetcode.com/uploads/2020/04/15/sample_2_1791.png" style="width: 320px; height: 173px;" />
 <pre>
 <strong>Input:</strong> nums = [1,0,0,1,0,1], k = 2
