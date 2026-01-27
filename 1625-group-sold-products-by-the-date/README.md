@@ -13,7 +13,7 @@ Each row of this table contains the product name and the date it was sold in a m
 
 <p>&nbsp;</p>
 
-<p>Write a solution to find for each date the number of different products sold and their names.</p>
+<p>Write solution to find for each date the number of different products sold and their names.</p>
 
 <p>The sold products names for each date should be sorted lexicographically.</p>
 
