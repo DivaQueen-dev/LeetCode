@@ -1,21 +1,24 @@
-class Solution 
-{
-  public String addBinary(String a, String b) 
-  {
-    StringBuilder sb = new StringBuilder();
-    int carry = 0;
-    int i = a.length() - 1;
-    int j = b.length() - 1;
+class Solution {
+    public String addBinary(String a, String b) {
+        int n1 = a.length(), n2 = b.length();
+        int max = Math.max(n1, n2);
+        int C = 0, i = 0;
 
-    while (i >= 0 || j >= 0 || carry == 1) 
-    {
-      if(i >= 0)
-        carry += a.charAt(i--) - '0';
-      if(j >= 0)
-        carry += b.charAt(j--) - '0';
-      sb.append(carry % 2);
-      carry /= 2;
+        StringBuilder sb = new StringBuilder();
+
+        while (i < max || C > 0) {
+            int A = i < n1 ? a.charAt(n1 - 1 - i) - '0' : 0;
+            int B = i < n2 ? b.charAt(n2 - 1 - i) - '0' : 0;
+
+            int S = (A ^ B) ^ C;
+            int C_out = ((A ^ B) & C) | (A & B);
+
+            sb.append((char)(S + '0'));
+            C = C_out;
+
+            i++;
+        }
+
+        return sb.reverse().toString();
     }
-    return sb.reverse().toString();
-  }
 }
