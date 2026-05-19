@@ -1,27 +1,66 @@
 class Solution {
     public int[] findMissingAndRepeatedValues(int[][] grid) {
-        long actualSum = 0, actualSquareSum = 0;
-        int n = grid.length;
-        long N = (long) n * n;
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                int num = grid[i][j];
-                actualSum += num;
-                actualSquareSum += (long) num * num;
+        int n = grid.length;
+        int xor = 0;
+
+        for (int[] row : grid) {
+            for (int num : row) {
+                xor ^= num;
             }
         }
 
-        long expectedSum = (N * (N + 1)) / 2;
-        long expectedSquareSum = (N * (N + 1) * (2 * N + 1)) / 6;
+        for (int i = 1; i <= n * n; i++) {
+            xor ^= i;
+        }
 
-        long sumDifference = actualSum - expectedSum;
-        long squareSumDifference = actualSquareSum - expectedSquareSum;
+        int rightmostBit = xor & -xor;
 
-        long sumAb = squareSumDifference / sumDifference;
+        int bucket1 = 0;
+        int bucket2 = 0;
 
-        int repeated = (int) ((sumAb + sumDifference) / 2);
-        int missing = (int) ((sumAb - sumDifference) / 2);
+        for (int[] row : grid) {
+            for (int num : row) {
+
+                if ((num & rightmostBit) != 0) {
+                    bucket1 ^= num;
+                } else {
+                    bucket2 ^= num;
+                }
+            }
+        }
+
+        for (int i = 1; i <= n * n; i++) {
+
+            if ((i & rightmostBit) != 0) {
+                bucket1 ^= i;
+            } else {
+                bucket2 ^= i;
+            }
+        }
+
+        int repeated;
+        int missing;
+
+        boolean found = false;
+
+        for (int[] row : grid) {
+            for (int num : row) {
+
+                if (num == bucket1) {
+                    found = true;
+                    break;
+                }
+            }
+        }
+
+        if (found) {
+            repeated = bucket1;
+            missing = bucket2;
+        } else {
+            repeated = bucket2;
+            missing = bucket1;
+        }
 
         return new int[]{repeated, missing};
     }
