@@ -1,20 +1,25 @@
 class Solution {
     public double myPow(double x, int n) {
-        long N = n; 
-        if (N < 0) {
-            x = 1 / x;
-            N = -N;
+
+        double base = x;
+        long exponent = n;
+
+        if (exponent < 0) {
+            base = 1 / base;
+            exponent = -exponent;
         }
 
-        double result = 1.0;
-        double currentProduct = x;
+        double result = 1;
 
-        while (N > 0) {
-            if ((N % 2) == 1) { 
-                result *= currentProduct;
+        while (exponent > 0) {
+
+            if ((exponent & 1) == 1) {
+                result *= base;
             }
-            currentProduct *= currentProduct; 
-            N /= 2; 
+
+            base *= base;
+
+            exponent >>= 1;
         }
 
         return result;
