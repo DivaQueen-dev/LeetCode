@@ -1,19 +1,32 @@
 class Solution {
-    private int gcd(int a, int b) { return b == 0 ? a : gcd(b, a % b); }
-
-    public long gcdSum(int[] A) {
-        int max = 0;
-        for (int i = 0; i < A.length; i++) {
-            max = Math.max(max, A[i]);
-            A[i] = gcd(A[i], max);
+    public int gcd(int a ,int b)
+    {
+        while(b!=0)
+        {
+            int t=a%b;
+            a=b;
+            b=t;
         }
+        return a;
 
-        Arrays.sort(A);
-
-        long res = 0;        
-        for (int i = 0, j = A.length - 1; i < j; i++, j--)
-            res += gcd(A[i], A[j]);
-
-        return res;
+    }
+    public long gcdSum(int[] nums) {
+        int n=nums.length;
+        int arr[]=new int[n];
+        int m=Integer.MIN_VALUE;
+        for(int i=0 ;i<n;i++)
+        {
+           m=Math.max(nums[i],m);
+           arr[i]=gcd(m,nums[i]);
+        }
+        Arrays.sort(arr);
+    long ans=0;
+    int left=0;
+    int right=n-1;
+    while(left<right)
+    {
+        ans+=gcd(arr[left++],arr[right--]);
+    }
+    return ans;
     }
 }
